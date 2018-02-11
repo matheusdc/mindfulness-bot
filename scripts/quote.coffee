@@ -15,9 +15,14 @@ module.exports = (robot) ->
 
   # Mindfulness quote from author
   # The bot replies with a random quote from the specified author
-  robot.respond /quote from (.*)/i, (res) ->
+  robot.respond /quotefrom?\s?(.*)/i, (res) ->
     # getting the author
     author = res.match[1]
+    #  checking if there is an author
+    if author.length <= 0
+      # informing the user and exiting
+      res.send 'Please, specify an author'
+      return
 
     # filtering the array for a specific author
     quotesFromSpecificAuthor = quotes.filter (quote) ->
@@ -35,9 +40,14 @@ module.exports = (robot) ->
 
   # Mindfulness quote about keyword
   # The bot replies with a random quote with a specific keyword
-  robot.respond /quote about (.*)/i, (res) ->
+  robot.respond /quoteabout?\s?(.*)/i, (res) ->
     # getting the keyword
     keyword = res.match[1]
+    #  checking if there is a keyword
+    if keyword.length <= 0
+      # informing the user and exiting
+      res.send 'Please, specify a keyword'
+      return
 
     # filtering the array for a specific keyword in quotes
     quotesWithSpecificKeyword = quotes.filter (quote) ->
