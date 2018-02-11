@@ -4,7 +4,6 @@
 quotes = require('./quotes.json')
 
 module.exports = (robot) ->
-
   # Mindfulness quote
   # The bot replies with a random quote
   robot.respond /quote$/i, (res) ->
