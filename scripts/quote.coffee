@@ -6,21 +6,21 @@ quotes = require('./quotes.json')
 module.exports = (robot) ->
   # Mindfulness quote
   # The bot replies with a random quote
-  robot.respond /quote$/i, (res) ->
+  robot.hear /(\/)?quote(@mindfulnessQuotesBot)?$/i, (res) ->
     # selecting a random quote from the quotes array
     randomQuote = res.random quotes
-    res.send '"' + randomQuote.quote + '"  ' + randomQuote.author
+    res.reply '"' + randomQuote.quote + '"  ' + randomQuote.author
 
 
   # Mindfulness quote from author
   # The bot replies with a random quote from the specified author
-  robot.respond /quotefrom?\s?(.*)/i, (res) ->
+  robot.hear /(\/)?quotefrom(@mindfulnessQuotesBot)?\s?(.*)?/i, (res) ->
     # getting the author
-    author = res.match[1]
+    author = res.match[3]
     #  checking if there is an author
-    if author.length <= 0
+    if typeof author == 'undefined' || author.length <= 0
       # informing the user and exiting
-      res.send 'Please, specify an author'
+      res.reply 'Please, specify an author'
       return
 
     # filtering the array for a specific author
@@ -32,20 +32,20 @@ module.exports = (robot) ->
     if quotesFromSpecificAuthor.length > 0
       # selecting a random quote from the quotesFromSpecificAuthor array
       randomQuote = res.random quotesFromSpecificAuthor
-      res.send '"' + randomQuote.quote + '"  ' + randomQuote.author
+      res.reply '"' + randomQuote.quote + '"  ' + randomQuote.author
     else
-      res.send 'Sorry, couldn\'t find any quotes from that author'
+      res.reply 'Sorry, couldn\'t find any quotes from that author'
 
 
   # Mindfulness quote about keyword
   # The bot replies with a random quote with a specific keyword
-  robot.respond /quoteabout?\s?(.*)/i, (res) ->
+  robot.hear /(\/)?quoteabout?(@mindfulnessQuotesBot)?\s?(.*)/i, (res) ->
     # getting the keyword
-    keyword = res.match[1]
+    keyword = res.match[3]
     #  checking if there is a keyword
-    if keyword.length <= 0
+    if typeof keyword == 'undefined' || keyword.length <= 0
       # informing the user and exiting
-      res.send 'Please, specify a keyword'
+      res.reply 'Please, specify a keyword'
       return
 
     # filtering the array for a specific keyword in quotes
@@ -58,9 +58,9 @@ module.exports = (robot) ->
     if quotesWithSpecificKeyword.length > 0
       # selecting a random quote from the quotesWithSpecificKeyword array
       randomQuote = res.random quotesWithSpecificKeyword
-      res.send '"' + randomQuote.quote + '"  ' + randomQuote.author
+      res.reply '"' + randomQuote.quote + '"  ' + randomQuote.author
     else
-      res.send 'Sorry, couldn\'t find any quotes with that keyword'
+      res.reply 'Sorry, couldn\'t find any quotes with that keyword'
 
   # Error handling
   # The bot replies with error message and log a [FIX ME] tag on the console
