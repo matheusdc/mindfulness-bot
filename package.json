@@ -21,6 +21,6 @@
     "hubot-telegram": "0.1.2"
   },
   "engines": {
-    "node": "8.12.x"
+    "node": "8.15.x"
   }
 }
